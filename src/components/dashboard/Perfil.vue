@@ -1,64 +1,93 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import introJs from 'intro.js';
+import 'intro.js/introjs.css';
+
+const startTour = () => {
+  introJs().setOptions({
+    steps: [
+      {
+        element: '.save',
+        intro: 'Esta é a primeira seção.',
+        position: 'bottom'
+      },
+      {
+        element: '.save',
+        intro: 'Aqui é onde você pode encontrar mais informações.',
+        position: 'top'
+      },
+      {
+        element: '.editar',
+        intro: 'Esta é a última parte do tour.',
+        position: 'left'
+      }
+    ]
+  }).start();
+};
+
+onMounted(() => {
+  startTour();
+});
+
+const editar = ref(false);
+
+const mudar = () => {
+  editar.value = !editar.value;
+};
+
+</script>
+
 <template>
-    <div>
-      <!-- Elementos que você quer destacar -->
-      <div id="step1" class="tour-step">Seção 1</div>
-      <div id="step2" class="tour-step">Seção 2</div>
-      <div id="step3" class="tour-step">Seção 3</div>
-      
-      <!-- Botão para iniciar o tour (opcional, pode ser removido se o tour iniciar automaticamente) -->
-      <button @click="startTour">Iniciar Tour</button>
+  <div>
+    <div class="container-fluid p-0 position-absolute">
+      <div class="save shadow w-100 px-5 d-flex align-items-center justify-content-between">
+        <div class="edit fw-bold">Usuário</div>
+        <div class="usuario" :class="{ 'd-none': editar }">
+          <button @click="mudar" class="btn btn-primary py-2 px-3 ms-3 rounded-0">Editar</button>
+        </div>
+        <div class="editar" :class="{ 'd-block': editar, 'd-none': !editar }">
+          <a href="" class="options text-decoration-none">
+            <i class="fa-solid fa-ellipsis-vertical me-2"></i> Mais Opções 
+          </a>
+          <button @click="mudar" class="btn btn-outline-secondary py-2 px-3 ms-5 rounded-0">Cancelar</button>
+          <button @click="mudar" class="btn btn-outline-primary py-2 px-3 ms-3 rounded-0">Salvar</button>
+        </div>
+      </div>
     </div>
-  </template>
-  
-  <script>
-  import { onMounted } from 'vue';
-  import introJs from 'intro.js';
-  import 'intro.js/introjs.css'; // Importa o CSS do Intro.js
-  
-  export default {
-    name: 'TourComponent',
-    
-    setup() {
-      // Função para iniciar o tour
-      const startTour = () => {
-        introJs().setOptions({
-          steps: [
-            {
-              element: '#step1',
-              intro: 'Esta é a primeira seção.',
-              position: 'bottom'
-            },
-            {
-              element: '#step2',
-              intro: 'Aqui é onde você pode encontrar mais informações.',
-              position: 'top'
-            },
-            {
-              element: '#step3',
-              intro: 'Esta é a última parte do tour.',
-              position: 'left'
-            }
-          ]
-        }).start();
-      };
-  
-      // Iniciar o tour automaticamente quando o componente for montado
-      onMounted(() => {
-        startTour();
-      });
-  
-      return {
-        startTour
-      };
-    }
-  };
-  </script>
-  
-  <style>
-  .tour-step {
-    border: 2px solid red;
-    padding: 10px;
-    margin: 10px;
-  }
-  </style>
-  
+    <div class="dados p-3 h-100 bg-warning">
+      
+
+    </div>
+  </div>
+</template>
+
+
+
+<style scoped>
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+.container-fluid {
+  z-index: 3;
+}
+
+.save {
+  height: 8vh;
+  background-color: var(--background-primary);
+}
+
+.save > .edit {
+  font-size: 1.6em;
+  color: var(--color-primary);
+}
+
+.dados {
+}
+
+
+</style>
