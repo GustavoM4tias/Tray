@@ -26,3 +26,16 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# build / IDE
+bin/
+obj/
+.vs/
+*.user
+.DS_Store
+
+# segredos
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
